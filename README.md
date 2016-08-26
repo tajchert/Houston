@@ -73,12 +73,24 @@ Add the dependency itself:
     compile 'com.github.tajchert:Houston:0.1.1'
 ```
 
+
+
 >"Persistence is very important" Elon Musk - SpaceX CEO
 
 So we have:
 ```
 houston.persistNotifications();//to save all notification currently available in getNotifications()
 ```
+:)
+
+###ToDo
+
+It is on launch sequence list but any Pull Request with those features are more than welcomed.
+
+* Special filter for ongoing notifications
+* Persist order of notifications (priority?)
+* Allow to group notifications (by category?) show new group notification and hide previous ones
+
 
 ###WIP
 This is very simple - categories and tags. But in most cases enought, any suggestions or Pull Request to make it more powerful are welcomed.
