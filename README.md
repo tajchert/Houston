@@ -1,7 +1,7 @@
 # Houston - Notification Helper for Android
 [![](https://jitpack.io/v/tajchert/Houston.svg)](https://jitpack.io/#tajchert/Houston)
 
-![Mission Patch](https://raw.githubusercontent.com/tajchert/Houston/master/img/icon_library.jpg)
+<img src="img/icon_library.jpg" width="200" height="200" alt="Mission Patch"/>
 
 "Houston, we've had a problem here" - managing notifications on Android is a pain sometime. You need to store Ids for all of them if you wish to dismiss some of them. Creating proper managment is like inventing a wheel once more - you have done it dozens of times and involves a lot of same code.
 
@@ -72,6 +72,7 @@ Add the dependency itself:
 ```
 
 >"Persistence is very important" Elon Musk - SpaceX CEO
+
 So we have:
 ```
 houston.persistNotifications();//to save all notification currently available in getNotifications()
