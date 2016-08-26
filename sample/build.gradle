@@ -23,7 +23,7 @@ dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   compile 'com.android.support:appcompat-v7:24.2.0'
 
-  compile project(':houston')
+  compile project(':library')
 
   compile 'com.jakewharton:butterknife:8.3.0'
   apt 'com.jakewharton:butterknife-compiler:8.3.0'

@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HustonNotificationAndroid.iml" filepath="$PROJECT_DIR$/HustonNotificationAndroid.iml" />
-      <module fileurl="file://$PROJECT_DIR$/houston/houston.iml" filepath="$PROJECT_DIR$/houston/houston.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
     </modules>
   </component>
