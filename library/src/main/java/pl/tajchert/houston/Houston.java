@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
-import static pl.tajchert.houston.HoustonLandReceiver.KEY_ID;
+import static pl.tajchert.houston.HoustonLandReceiver.NOTIF_ID;
 
 public class Houston implements SharedPreferences.OnSharedPreferenceChangeListener {
   private static final String TAG = Houston.class.getCanonicalName();
@@ -29,25 +29,11 @@ public class Houston implements SharedPreferences.OnSharedPreferenceChangeListen
   private ArrayList<NotificationWrapper> allNotifications = new ArrayList<>();
 
   public Houston(Context context) {
-    this.sharedPreferences = context.getSharedPreferences(context.getApplicationContext().getPackageName(), MODE_PRIVATE);
-    this.notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-    allNotifications = gson.fromJson(this.sharedPreferences.getString(KEY_STORED, ""), new TypeToken<List<NotificationWrapper>>() {
-    }.getType());
-    if (allNotifications == null) {
-      allNotifications = new ArrayList<>();
-    }
-    this.sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    this(context.getSharedPreferences(context.getApplicationContext().getPackageName(), MODE_PRIVATE), context);
   }
 
   public Houston(SharedPreferences sharedPreferences, Context context) {
-    this.sharedPreferences = sharedPreferences;
-    this.notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-    allNotifications = gson.fromJson(this.sharedPreferences.getString(KEY_STORED, ""), new TypeToken<List<NotificationWrapper>>() {
-    }.getType());
-    if (allNotifications == null) {
-      allNotifications = new ArrayList<>();
-    }
-    this.sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    this(sharedPreferences, (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
   }
 
   public Houston(SharedPreferences sharedPreferences, NotificationManager notificationManager) {
@@ -123,9 +109,9 @@ public class Houston implements SharedPreferences.OnSharedPreferenceChangeListen
 
   public Notification.Builder addDismissListener(Notification.Builder builder, int id, Context context) {
     Intent intent = new Intent(context, HoustonLandReceiver.class);
-    Bundle intentYawnBackActionExtras = new Bundle();
-    intentYawnBackActionExtras.putInt(KEY_ID, id);
-    intent.putExtras(intentYawnBackActionExtras);
+    Bundle intentExtras = new Bundle();
+    intentExtras.putInt(NOTIF_ID, id);
+    intent.putExtras(intentExtras);
     PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     builder.setDeleteIntent(pendingIntent);
     return builder;
@@ -133,9 +119,9 @@ public class Houston implements SharedPreferences.OnSharedPreferenceChangeListen
 
   public NotificationCompat.Builder addDismissListener(NotificationCompat.Builder builder, int id, Context context) {
     Intent intent = new Intent(context, HoustonLandReceiver.class);
-    Bundle intentYawnBackActionExtras = new Bundle();
-    intentYawnBackActionExtras.putInt(KEY_ID, id);
-    intent.putExtras(intentYawnBackActionExtras);
+    Bundle intentExtras = new Bundle();
+    intentExtras.putInt(NOTIF_ID, id);
+    intent.putExtras(intentExtras);
     PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     builder.setDeleteIntent(pendingIntent);
     return builder;
@@ -156,18 +142,16 @@ public class Houston implements SharedPreferences.OnSharedPreferenceChangeListen
   public void refreshList() {
     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
       StatusBarNotification[] activeNotifications = notificationManager.getActiveNotifications();
-      if (activeNotifications != null && activeNotifications.length > 0) {
+      if (activeNotifications != null) {
         ArrayList<NotificationWrapper> notificationWrappers = new ArrayList<>(allNotifications);
         for (StatusBarNotification notif : activeNotifications) {
           NotificationWrapper notificationWrapper = getNotification(notif.getId());
-          if (notificationWrapper != null && notificationWrappers.contains(notificationWrapper)) {
+          if (notificationWrapper != null) {
             notificationWrappers.remove(notificationWrapper);
           }
         }
-        if (notificationWrappers.size() > 0) {
-          for (NotificationWrapper notificationWrapper : notificationWrappers) {
-            land(notificationWrapper.id);
-          }
+        for (NotificationWrapper notificationWrapper : notificationWrappers) {
+          land(notificationWrapper.id);
         }
       } else {
         landAll();
@@ -184,7 +168,7 @@ public class Houston implements SharedPreferences.OnSharedPreferenceChangeListen
   }
 
   public void landAll(String category) {
-    Log.d(TAG, "Tranquility Base here. The Eagles had landed");
+    Log.d(TAG, "Tranquility Base here. The Eagles have landed");
     ArrayList<NotificationWrapper> notifications = getNotifications(category);
     for (NotificationWrapper notificationWrapper : notifications) {
       notificationManager.cancel(notificationWrapper.id);
@@ -194,20 +178,17 @@ public class Houston implements SharedPreferences.OnSharedPreferenceChangeListen
   }
 
   public void landAll() {
-    Log.d(TAG, "Tranquility Base here. All Eagles had landed");
+    Log.d(TAG, "Tranquility Base here. All Eagles have landed");
     notificationManager.cancelAll();
     allNotifications.clear();
     persistNotifications();
   }
 
   @Override public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-    Log.d(TAG, "onSharedPreferenceChanged: ");
     if (KEY_STORED.equals(s)) {
-      Log.d(TAG, "onSharedPreferenceChanged: ");
       allNotifications = gson.fromJson(this.sharedPreferences.getString(KEY_STORED, ""), new TypeToken<List<NotificationWrapper>>() {
       }.getType());
     }
-    Log.d(TAG, "onSharedPreferenceChanged: ");
   }
 
   public void onDestroy() {
