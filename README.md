@@ -3,7 +3,8 @@
 
 <img src="img/icon_library.jpg" width="200" height="200" alt="Mission Patch"/>
 
-"Houston, we've had a problem here" - managing notifications on Android is a pain sometime. You need to store Ids for all of them if you wish to dismiss some of them. Creating proper managment is like inventing a wheel once more - you have done it dozens of times and involves a lot of same code.
+"Houston, we've had a problem here" - managing notifications on Android is a pain sometime. You need to store Ids for all of them if you wish to dismiss some of them.
+Example: in news app you have categories and you notify user about new articles in each category. But you would like to easily dismiss notifications about particular category when user opens it, or particular one when it was clicked without storing all Ids and managing them.
 
 ###Houston to the rescue!
 
