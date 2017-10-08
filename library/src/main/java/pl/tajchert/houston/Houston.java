@@ -10,10 +10,11 @@ import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -160,7 +161,6 @@ public class Houston implements SharedPreferences.OnSharedPreferenceChangeListen
   }
 
   public void land(int id) {
-    Log.d(TAG, "Tranquility Base here. The Eagle has landed");
     notificationManager.cancel(id);
     NotificationWrapper notificationWrapper = getNotification(id);
     allNotifications.remove(notificationWrapper);
@@ -168,7 +168,6 @@ public class Houston implements SharedPreferences.OnSharedPreferenceChangeListen
   }
 
   public void landAll(String category) {
-    Log.d(TAG, "Tranquility Base here. The Eagles have landed");
     ArrayList<NotificationWrapper> notifications = getNotifications(category);
     for (NotificationWrapper notificationWrapper : notifications) {
       notificationManager.cancel(notificationWrapper.id);
@@ -178,7 +177,6 @@ public class Houston implements SharedPreferences.OnSharedPreferenceChangeListen
   }
 
   public void landAll() {
-    Log.d(TAG, "Tranquility Base here. All Eagles have landed");
     notificationManager.cancelAll();
     allNotifications.clear();
     persistNotifications();
