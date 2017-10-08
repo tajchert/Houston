@@ -70,7 +70,7 @@ Add Jitpack in your root build.gradle at the end of repositories:
 ```
 Add the dependency itself:
 ```gradle
-    compile 'com.github.tajchert:Houston:0.1.1'
+    compile 'com.github.tajchert:Houston:0.1.2'
 ```
 
 
