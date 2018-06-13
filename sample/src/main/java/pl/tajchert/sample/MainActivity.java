@@ -1,18 +1,23 @@
 package pl.tajchert.sample;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
 import java.util.ArrayList;
 import java.util.Random;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import pl.tajchert.houston.Houston;
 import pl.tajchert.houston.NotificationWrapper;
 
@@ -83,8 +88,14 @@ public class MainActivity extends AppCompatActivity {
     stackBuilder.addParentStack(MainActivity.class);
     stackBuilder.addNextIntent(intent);
     PendingIntent pendingIntent = stackBuilder.getPendingIntent(1, PendingIntent.FLAG_CANCEL_CURRENT);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      NotificationChannel channel = new NotificationChannel("channelId", "channel name", NotificationManager.IMPORTANCE_DEFAULT);
+      channel.setDescription("channel description");
+      NotificationManager notificationManager = getSystemService(NotificationManager.class);
+      notificationManager.createNotificationChannel(channel);
+    }
 
-    return new NotificationCompat.Builder(MainActivity.this).setSmallIcon(R.mipmap.ic_launcher)
+    return new NotificationCompat.Builder(MainActivity.this, "channelId").setSmallIcon(R.mipmap.ic_launcher)
         .setLargeIcon(BitmapFactory.decodeResource(MainActivity.this.getResources(), R.mipmap.ic_launcher))
         .setAutoCancel(true)
         .setContentTitle(title)
