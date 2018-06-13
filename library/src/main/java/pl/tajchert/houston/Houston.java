@@ -40,12 +40,23 @@ public class Houston implements SharedPreferences.OnSharedPreferenceChangeListen
   public Houston(SharedPreferences sharedPreferences, NotificationManager notificationManager) {
     this.sharedPreferences = sharedPreferences;
     this.notificationManager = notificationManager;
-    allNotifications = gson.fromJson(this.sharedPreferences.getString(KEY_STORED, ""), new TypeToken<List<NotificationWrapper>>() {
-    }.getType());
-    if (allNotifications == null) {
-      allNotifications = new ArrayList<>();
-    }
+    allNotifications = readNotificationListFromStorage(sharedPreferences);
     this.sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+  }
+
+  private ArrayList<NotificationWrapper> readNotificationListFromStorage(SharedPreferences sharedPreferences) {
+    ArrayList<NotificationWrapper> notificationFromStorage = null;
+    try {
+      notificationFromStorage = gson.fromJson(this.sharedPreferences.getString(KEY_STORED, ""), new TypeToken<List<NotificationWrapper>>() {}.getType());
+    } catch (Exception e) {
+      //JsonSyntaxException or NumberFormatExcetion and similar, hard to reproduce but in such case it is much better to drop data instead of throwing exception
+      e.printStackTrace();
+      sharedPreferences.edit().remove(KEY_STORED).apply();
+    }
+    if (notificationFromStorage == null) {
+      notificationFromStorage = new ArrayList<>();
+    }
+    return notificationFromStorage;
   }
 
   public void saveNotification(NotificationWrapper notificationWrapper) {
@@ -184,8 +195,7 @@ public class Houston implements SharedPreferences.OnSharedPreferenceChangeListen
 
   @Override public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
     if (KEY_STORED.equals(s)) {
-      allNotifications = gson.fromJson(this.sharedPreferences.getString(KEY_STORED, ""), new TypeToken<List<NotificationWrapper>>() {
-      }.getType());
+      allNotifications = readNotificationListFromStorage(sharedPreferences);
     }
   }
 
