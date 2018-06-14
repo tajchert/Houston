@@ -70,10 +70,19 @@ Add Jitpack in your root build.gradle at the end of repositories:
 ```
 Add the dependency itself:
 ```gradle
-    compile 'com.github.tajchert:Houston:0.1.2'
+    compile 'com.github.tajchert:Houston:0.1.4'
 ```
 
 
+
+Proguard:
+```
+-keep class pl.tajchert.houston.NotificationWrapper
+-keep class pl.tajchert.houston.NotificationCategory
+
+-keepclassmembers class pl.tajchert.houston.NotificationWrapper { *; }
+-keepclassmembers class pl.tajchert.houston.NotificationCategory { *; }
+```
 
 >"Persistence is very important" Elon Musk - SpaceX CEO
 
