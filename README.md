@@ -1,5 +1,5 @@
 # Houston - Notification Helper for Android
-[![](https://jitpack.io/v/tajchert/Houston.svg)](https://jitpack.io/#tajchert/Houston)
+[![](https://jitpack.io/v/tajchert/Houston.svg)](https://jitpack.io/#tajchert/Houston)  [![](https://jitci.com/gh/tajchert/Houston/svg)](https://jitci.com/gh/tajchert/Houston)
 
 <img src="img/icon_library.jpg" width="200" height="200" alt="Mission Patch"/>
 
@@ -7,7 +7,7 @@
 
 Example: in news app you have categories and you notify user about new articles in each category. But you would like to easily dismiss notifications about particular category when user opens it, or particular one when it was clicked without storing all Ids and managing them.
 
-###Houston to the rescue!
+### Houston to the rescue!
 
 Houston aim is to allow easy show, hide and track all notifications displayed without hassle of Ids.
 
@@ -56,7 +56,7 @@ houston.refreshList();
 //In such case calling removeNotification() on opened activity is not needed
 ```
 
-###How to add?
+### How to add?
 
 Gradle depedency:
 Add Jitpack in your root build.gradle at the end of repositories:
@@ -70,12 +70,12 @@ Add Jitpack in your root build.gradle at the end of repositories:
 ```
 Add the dependency itself:
 ```gradle
-    compile 'com.github.tajchert:Houston:0.1.4'
+    compile 'com.github.tajchert:Houston:0.2.0'
 ```
 
 
 
-Proguard:
+### Proguard:
 ```
 -keep class pl.tajchert.houston.NotificationWrapper
 -keep class pl.tajchert.houston.NotificationCategory
@@ -92,7 +92,10 @@ houston.persistNotifications();//to save all notification currently available in
 ```
 :)
 
-###ToDo
+### AndroidX, Kotlin...
+AndroidX since version 2.0.0, last build without is 0.1.5. Kotlin since 0.2.0.
+
+### ToDo
 
 It is on launch sequence list but any Pull Request with those features are more than welcomed.
 
@@ -101,5 +104,5 @@ It is on launch sequence list but any Pull Request with those features are more 
 * Allow to group notifications (by category?) show new group notification and hide previous ones
 
 
-###WIP
+### WIP
 This is very simple - categories and tags. But in most cases enought, any suggestions or Pull Request to make it more powerful are welcomed.
